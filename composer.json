@@ -1,5 +1,5 @@
 {
-    "name": "survey-api-laravel",
+    "name": "jreyesdev/survey-api-laravel",
     "type": "project",
     "description": "API RESTfull simple for Surveys.",
     "keywords": [
@@ -22,6 +22,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
+        "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.0"
     },
     "require-dev": {
