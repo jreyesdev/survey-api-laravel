@@ -5,6 +5,7 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\AuthUser;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
@@ -26,15 +27,15 @@ class LoginTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->createUser();
+        [$user] = AuthUser::createAuthUser();
 
         $response = $this->postJson('api/login', [
-            'email' => $this->user->email,
+            'email' => $user->email,
             'password' => 'password'
         ]);
 
         $response->assertExactJson([
-            'user' => $this->user->toArray(),
+            'user' => $user->toArray(),
             'token' => $response->baseResponse->original['token']
         ])->assertStatus(200);
     }
@@ -50,7 +51,7 @@ class LoginTest extends TestCase
     /** @test */
     public function error_email_not_exists()
     {
-        $this->createUser();
+        AuthUser::createAuthUser();
 
         $response = $this->postJson('api/login', [
             'email' => 'prueba@prueba.com',
@@ -63,10 +64,10 @@ class LoginTest extends TestCase
     /** @test */
     public function error_credentials()
     {
-        $this->createUser();
+        [$user] = AuthUser::createAuthUser();
 
         $response = $this->postJson('api/login', [
-            'email' => $this->user->email,
+            'email' => $user->email,
             'password' => '12324'
         ]);
 
